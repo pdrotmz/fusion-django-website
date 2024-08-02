@@ -112,7 +112,7 @@ celerybeat-schedule
 staticfiles/
 
 # media files
-media/
+media/disruptivos/
 
 # Local dev files
 .local/
