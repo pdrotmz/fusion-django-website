@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.0/ref/settings/
 
 from pathlib import Path
 import os
+from decouple import config
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -21,10 +22,10 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # See https://docs.djangoproject.com/en/5.0/howto/deployment/checklist/
 
 # SECURITY WARNING: keep the secret key used in production secret!
-SECRET_KEY = 'django-insecure-a!b=wp$@+h^*a+$u!k6*e3ax5@^(nx$-@ivo8*@5du+cckovck'
+SECRET_KEY = config('DJANGO_SECRET_KEY')
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = ['*']
 
@@ -79,11 +80,11 @@ WSGI_APPLICATION = 'fusion.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'railway',
-        'USER': 'postgres',
-        'PASSWORD': 'FRuAVwfdcHghYwcsPkiALCqqOAUsnBuA',
-        'HOST': 'monorail.proxy.rlwy.net',
-        'PORT': '42788'
+        'NAME': config('DB_NAME'),
+        'USER': config('DB_USER'),
+        'PASSWORD': config('DB_PASSWORD'),
+        'HOST': config('DB_HOST'),
+        'PORT': config('DB_PORT', default='5432')
     }
 }
 
@@ -141,11 +142,11 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 # Email produção
 
-EMAIL_HOST = 'localhost'
-EMAIL_HOST_USER = 'no-reply@teiastudios.com.br'
-EMAIL_PORT = 587
-EMAIL_USE_TSL = True
-EMAIL_HOST_PASSWORD = 'disruprtivo123'
-DEFAULT_FROM_EMAIL = 'contato@fusion.com.br'
+EMAIL_HOST = config('EMAIL_HOST')
+EMAIL_HOST_USER = config('EMAIL_HOST_USER')
+EMAIL_PORT = config('EMAIL_PORT', cast=int)
+EMAIL_USE_TLS = config('EMAIL_USE_TLS', default=True, cast=bool)
+EMAIL_HOST_PASSWORD = config('EMAIL_HOST_PASSWORD')
+DEFAULT_FROM_EMAIL = config('DEFAULT_FROM_EMAIL')
 
 """
